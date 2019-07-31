@@ -43,15 +43,13 @@ class Utils
         foreach ($identifer->all() as $value) {
             $value->delete();
         }
-        $identFiscal = new IdentificadorFiscal();
-        $identFiscal->tipoidfiscal = 'DNI';
-        $identFiscal->save();
-
-        $identFiscal->tipoidfiscal = 'CUIT';
-        $identFiscal->save();
-
-        $identFiscal->tipoidfiscal = 'Pasaporte';
-        $identFiscal->save();
+        $tiposfiscal = array(
+            "DNI","CUIT","Pasaporte"
+        );
+        foreach ($tiposfiscal as &$valor) {
+            $identifer->tipoidfiscal=$valor;
+            $identifer->save();
+        }
 
 
     }
