@@ -1,7 +1,10 @@
 <?php
+
 namespace FacturaScripts\Plugins\Argentina;
 
+use FacturaScripts\Core\Base\MiniLog;
 use FacturaScripts\Core\Base\InitClass;
+use FacturaScripts\Core\App\AppSettings;
 
 class Init extends InitClass
 {
@@ -13,8 +16,15 @@ class Init extends InitClass
 
     public function update()
     {
-        Lib\Utils::ChangeDefaultTax();
-        Lib\Utils::ChangeIdentifer();
-        Lib\Utils::ChangeState();
+        $codpais = AppSettings::get('default', 'codpais');
+        if ($codpais != 'ARG') {
+            $newminilog = new MiniLog();
+            $newminilog->alert("You must change the country from default settings", $context = []);
+        } else {
+            Lib\Utils::ChangeDefaultTax();
+            Lib\Utils::ChangeIdentifer();
+            Lib\Utils::ChangeState();
+        }
+
     }
 }
